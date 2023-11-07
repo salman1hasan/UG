@@ -10,14 +10,11 @@ struct ContentView: View {
 @AppStorage("onboarding") var isOnboardingViewActive: Bool = true
     
     var body: some View {
-        VStack(spacing: 20){
-            Text("Onboarding")
-                .font(.largeTitle)
-            
-        Button(action:{
-            isOnboardingViewActive = false
-        }){
-                Text("Start")
+        ZStack{
+            if isOnboardingViewActive{
+                OnboardingView()
+            }else{
+                HomeView()
             }
         }
     }
@@ -26,5 +23,6 @@ struct ContentView: View {
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
         ContentView()
+            .previewDevice("iPhone 13")
     }
 }
