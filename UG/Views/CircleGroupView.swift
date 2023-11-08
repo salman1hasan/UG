@@ -18,7 +18,7 @@ var body: some View {
         .stroke(ShapeColor.opacity(ShapeOpacity), lineWidth:40)
         .frame(width:260, height:260, alignment:.center)
       Circle()
-            .stroke(ShapeColor.opacity(ShapeOpacity), lineWidth: 80)
+        .stroke(ShapeColor.opacity(ShapeOpacity), lineWidth: 80)
         .frame(width:260, height:260, alignment:.center)
        }
     }
