@@ -1,28 +1,30 @@
 //
 //  ContentView.swift
-//  UG
+//  UNGUARDED
 //
-//  Created by Salman Hasan on 11/6/23.
+//  Created by Salman Hasan on 11/8/23.
 //
+
 import SwiftUI
 
 struct ContentView: View {
 @AppStorage("onboarding") var isOnboardingViewActive: Bool = true
     
-    var body: some View {
-        ZStack{
-            if isOnboardingViewActive{
-                OnboardingView()
-            }else{
-                HomeView()
-            }
+var body: some View{
+    ZStack{
+        if isOnboardingViewActive{
+            OnboardingView()
+        }else{
+            HomeView()
         }
+      }
     }
 }
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
         ContentView()
-            .previewDevice("iPhone 13")
+        .previewDevice("iPhone 13")
     }
 }
+

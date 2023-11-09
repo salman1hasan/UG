@@ -9,34 +9,35 @@ import SwiftUI
 
 struct HomeView: View {
     @AppStorage("onboarding") var isOnboardingViewActive: Bool = false
+    @State private var isAnimating: Bool = false
     
-    var body: some View{
-      VStack(spacing:20){
-          
-        Spacer()
-          
-        Image("character-2")
-              .resizable()
-              .scaledToFit()
-              .padding()
-          
-        Text("The time that leads to mastery is dependent on the intensiy of our focus.")
-              .font(.title3)
-              .fontWeight(.light)
-              .foregroundColor(.secondary)
-              .multilineTextAlignment(.center)
-              .padding()
-          
-          
-        Spacer()
-          
+    
+    
+    // MARK : -BODY
+    
+var body: some View {
+    VStack(spacing: 20) {
+    // MARK: - HEADER
+        
+    Spacer()
+    ZStack {
+    Link(destination: URL(string: "https://www.unguarded.com")!, label: {
+            Image("QRCode")
+                .resizable()
+                .frame(width: 380, height: 380)
+            })
+        }
+               
+Spacer()
     Button(action:{
-        isOnboardingViewActive = true
+        withAnimation{
+            isOnboardingViewActive = true
+        }
     }) {
     Image(systemName: "arrow.triangle.2.circlepath.circle.fill")
         .imageScale(.large)
             
-    Text("Restart")
+    Text("UNGUARDED")
         .font(.system(.title3, design:.rounded))
         .fontWeight(.bold)
     }
@@ -44,6 +45,11 @@ struct HomeView: View {
        .buttonBorderShape(.capsule)
        .controlSize(.large)
      }
+    .onAppear(perform: {
+          DispatchQueue.main.asyncAfter(deadline: .now() + 0.5, execute: {
+            isAnimating = true
+          })
+    })
   }
 }
 
