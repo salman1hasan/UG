@@ -1,59 +1,56 @@
 //
-//  HomeView.swift
+//  OnboardingView.swift
 //  UG
 //
-//  Created by Salman Hasan on 11/6/23.
+//  Created by Salman Hasan on 11/7/23.
 //
 
 import SwiftUI
 
 struct HomeView: View {
-    @AppStorage("onboarding") var isOnboardingViewActive: Bool = false
+    // MARK: - PROPERTY
+    @AppStorage("onboarding") var isOnboardingViewActive: Bool = true
+    @State private var buttonWidth: Double = UIScreen.main.bounds.width - 80
+    @State private var buttonOffset: CGFloat = 0
     @State private var isAnimating: Bool = false
     
     
-    
-    // MARK : -BODY
+   // MARK: - BODY
     
 var body: some View {
-    VStack(spacing: 20) {
-    // MARK: - HEADER
-        
-    Spacer()
     ZStack {
-    Link(destination: URL(string: "https://www.unguarded.com")!, label: {
-            Image("QRCode")
-                .resizable()
-                .frame(width: 380, height: 380)
-            })
-        }
+        Color("ColorBlack")
+            .ignoresSafeArea(.all, edges: .all)
                
-Spacer()
-    Button(action:{
-        withAnimation{
-            isOnboardingViewActive = true
-        }
-    }) {
-    Image(systemName: "arrow.triangle.2.circlepath.circle.fill")
-        .imageScale(.large)
+        VStack(spacing: 20) {
+            Spacer()
             
-    Text("UNGUARDED")
-        .font(.system(.title3, design:.rounded))
-        .fontWeight(.bold)
+            NavigationView {
+                ZStack{
+                    Color("ColorWhite")
+                        .ignoresSafeArea(.all, edges: .all)
+                
+                NavigationLink(destination:PinchView().navigationBarBackButtonHidden(true), label:{
+                    Image("QRCode")
+                        .resizable()
+                        .scaledToFit()
+                        .opacity(isAnimating ? 1 : 0)
+                        .animation(.easeOut(duration: 0.5), value: isAnimating)
+                })
+            }
     }
-       .buttonStyle(.borderedProminent)
-       .buttonBorderShape(.capsule)
-       .controlSize(.large)
-     }
-    .onAppear(perform: {
-          DispatchQueue.main.asyncAfter(deadline: .now() + 0.5, execute: {
-            isAnimating = true
-          })
-    })
-  }
+    .navigationViewStyle(.stack)
+      ZStack{
+              }
+             }
+          } //: HEADER
+           .onAppear(perform: {
+               isAnimating = true
+           })
+       }
+    
 }
-
-// MARK: - PREVIEW
+        
 struct HomeView_Previews: PreviewProvider {
   static var previews: some View {
     HomeView()

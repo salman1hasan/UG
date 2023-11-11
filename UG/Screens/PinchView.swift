@@ -67,17 +67,66 @@ struct PinchView: View {
                      isAnimating = true
                 }
             })
-            .overlay(
+    .overlay(
         InfoPanelView(scale: imageScale, offset: imageOffset)
             .padding(.horizontal)
             .padding(.top,30)
         , alignment: .top
             )
+    .overlay(
+        Group{
+            HStack{
+                Button{
+                    withAnimation(.spring()){
+                        if imageScale > 1 {
+                            imageScale -= 1
+                            if imageScale <= 1 {
+                            resetImageState()
+                            }
+                        }
+                    }
+            }label:{
+    ControlImageView(icon: "minus.magnifyingglass")
+                }
+                
+        Button{
+                resetImageState()
+                }label:{
+        ControlImageView(icon: "arrow.up.left.and.down.right.magnifyingglass")
+                }
+                
+        Button{
+            withAnimation(.spring()){
+            if imageScale < 5 {
+            imageScale += 1
+            if imageScale > 5 {
+            imageScale = 5
         }
+        }
+      }
+    }label:{
+    ControlImageView(icon: "plus.magnifyingglass")
+                .font(.system(size:36))
+                }
+            }
+            .padding(EdgeInsets(top:12, leading:20, bottom: 12, trailing: 20))
+            .background(.ultraThinMaterial)
+            .cornerRadius(12)
+            .opacity(isAnimating ? 1 : 0)
+        }
+            .padding(.bottom, 30)
+        , alignment: .bottom
+    )
+ }
         .navigationViewStyle(.stack)
         }
 }
 
-#Preview {
-    PinchView()
+
+struct PinchView_Previews: PreviewProvider {
+    static var previews: some View {
+        PinchView()
+            .previewDevice("Iphone 13")
+    }
 }
+    
